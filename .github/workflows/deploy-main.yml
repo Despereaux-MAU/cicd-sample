@@ -13,20 +13,20 @@ jobs:
         uses: cloudtype-github-actions/connect@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          ghtoken: ${{ secrets.GHB_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
       - name: Deploy
         uses: cloudtype-github-actions/deploy@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          ghtoken: ${{ secrets.GHB_TOKEN }}
           project: despereaux/cicd-sample
+          stage: main
           yaml: |
-            name: cicd-sample
+            name: # 프로젝트 이름 ex) `cicd`
             app: java@17
             options:
-              port: 8080
+              ports: 8080
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
                 ref: ${{ github.ref }}
-                preset: java-springboot
+              preset: java-springboot
