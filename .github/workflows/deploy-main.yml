@@ -1,5 +1,6 @@
 name: Deploy to cloudtype
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -13,20 +14,4 @@ jobs:
         uses: cloudtype-github-actions/connect@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          ghtoken: ${{ secrets.GHP_TOKEN }}
-      - name: Deploy
-        uses: cloudtype-github-actions/deploy@v1
-        with:
-          token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          project: nbc.docker/cicd
-          stage: main
-          yaml: |
-            name: cicd
-            app: java@17
-            options:
-              ports: 8080
-            context:
-              git:
-                url: git@github.com:${{ github.repository }}.git
-                ref: ${{ github.ref }}
-              preset: java-springboot
+          ghtoken: '${{ github.token }}'
