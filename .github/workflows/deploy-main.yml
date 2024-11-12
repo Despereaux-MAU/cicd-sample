@@ -1,6 +1,5 @@
 name: Deploy to cloudtype
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -14,4 +13,19 @@ jobs:
         uses: cloudtype-github-actions/connect@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          ghtoken: '${{ github.token }}'
+          ghtoken: ${{ secrets.GHB_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: despereaux/cicd-sample
+          yaml: |
+            name: cicd-sample
+            app: java@17
+            options:
+              port: 8080
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+                preset: java-springboot
