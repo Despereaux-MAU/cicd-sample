@@ -18,6 +18,7 @@ jobs:
         uses: cloudtype-github-actions/deploy@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHB_TOKEN }}
           project: despereaux/cicd-sample
           yaml: |
             name: cicd-sample
